@@ -1,0 +1,443 @@
+.setup {
+  position: relative;
+  min-height: 100dvh;
+  background: radial-gradient(120% 70% at 50% -8%, #2a1840 0%, #0d0d1e 46%, #06070f 100%);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  overflow-y: auto;
+  overscroll-behavior: none;
+}
+
+.setup-glow {
+  position: fixed;
+  top: -70px;
+  right: -50px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125,80,225,.4), transparent 64%);
+  filter: blur(22px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── MOBILE layout ── */
+.setup-content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 52px 22px 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Title area */
+.setup-supertitle {
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: #9a86d8;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.setup-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 0.92;
+  color: #fff;
+  letter-spacing: -1.5px;
+  text-shadow: 0 0 38px rgba(150,100,255,.4);
+  margin: 0;
+  text-align: center;
+}
+
+.setup-player-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 14px auto 32px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9a86d8;
+  box-shadow: 0 0 8px #9a86d8;
+  flex-shrink: 0;
+}
+
+.badge-text {
+  font-size: 13px;
+  color: #cfc7e8;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Section label */
+.section-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #7c7798;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.players-label { margin-top: 0; }
+
+/* Player list */
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 3px 6px 3px 14px;
+}
+
+.player-num {
+  font-size: 13px;
+  color: #6f6a8a;
+  font-weight: 800;
+  width: 16px;
+  flex-shrink: 0;
+  text-align: right;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.player-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 16px !important; /* must be ≥16px to prevent iOS zoom */
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  padding: 13px 0;
+}
+
+.player-input::placeholder { color: rgba(255,255,255,.28); }
+
+.remove-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 44px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,.05);
+  color: #8a8499;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.remove-btn:hover { background: rgba(255,255,255,.1); }
+
+.add-btn-dashed {
+  width: 100%;
+  padding: 14px;
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1.5px dashed rgba(255,255,255,.18);
+  background: transparent;
+  color: #b9b2d4;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.add-btn-dashed:hover {
+  border-color: rgba(154,134,216,.5);
+  color: #cfc7e8;
+}
+
+.error-msg {
+  color: #ff6b6b;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* Special roles section */
+.setup-right { margin-top: 28px; }
+
+.role-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role-toggle {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.role-toggle:hover { background: rgba(255,255,255,.07); }
+
+.role-toggle-icon {
+  font-size: 26px;
+  width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.role-toggle-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.role-toggle-label {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.role-toggle-desc {
+  display: block;
+  color: #8a8499;
+  font-size: 12.5px;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* Toggle switch */
+.toggle-track {
+  width: 56px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: background 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,.4);
+  pointer-events: none;
+}
+
+/* CTA — inline (desktop only, hidden on mobile) */
+.setup-cta-inline {
+  display: none;
+  margin-top: 18px;
+}
+
+.setup-hint {
+  text-align: center;
+  color: #6f6a8a;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* CTA — fixed bottom (mobile only) */
+.setup-cta-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 22px;
+  padding-bottom: calc(18px + var(--safe-bottom));
+  background: linear-gradient(transparent, #06070f 36%);
+  z-index: 10;
+}
+
+.start-btn {
+  width: 100%;
+  min-height: 58px;
+  border-radius: 18px;
+  border: none;
+  font-size: 17px;
+  font-weight: 800;
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: .2px;
+  transition: all 0.25s;
+}
+
+.start-btn.ready {
+  cursor: pointer;
+  color: #1a0608;
+  background: linear-gradient(135deg, #ff5b5b, #c01030);
+  box-shadow: 0 16px 36px -10px rgba(220,30,40,.7), inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+.start-btn.ready:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -10px rgba(220,30,40,.85), inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+.start-btn.disabled {
+  cursor: not-allowed;
+  color: #7a7488;
+  background: rgba(255,255,255,.08);
+  opacity: .75;
+}
+
+/* ── DESKTOP layout (≥768px) ── */
+@media (min-width: 768px) {
+  .setup {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .setup-glow {
+    top: -160px;
+    right: -110px;
+    width: 560px;
+    height: 560px;
+    filter: blur(46px);
+  }
+
+  .setup-content {
+    max-width: 1200px;
+    height: 100%;
+    max-height: 840px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 60px;
+    align-items: stretch;
+  }
+
+  /* Left column: title + players */
+  .setup-left {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding-top: 8px;
+  }
+
+  .setup-supertitle {
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 7px;
+    margin-bottom: 0;
+  }
+
+  .setup-title {
+    text-align: left;
+    font-size: 104px;
+    line-height: .86;
+    letter-spacing: -3px;
+    text-shadow: 0 0 60px rgba(150,100,255,.5);
+  }
+
+  .setup-player-badge {
+    margin: 22px 0 0;
+    align-self: flex-start;
+    padding: 9px 18px;
+    gap: 9px;
+  }
+
+  .badge-dot { width: 8px; height: 8px; }
+  .badge-text { font-size: 14px; }
+
+  .players-label {
+    margin-top: 38px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+
+  /* 2-column player grid */
+  .player-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-bottom: 0;
+    align-content: start;
+  }
+
+  .player-row {
+    border-radius: 16px;
+    padding: 4px 8px 4px 16px;
+  }
+
+  .player-input { padding: 14px 0; font-size: 17px !important; }
+
+  .add-btn-dashed {
+    grid-column: 1 / -1;
+    min-height: 62px;
+    font-size: 16px;
+    border-radius: 16px;
+  }
+
+  /* Right column: roles + CTA */
+  .setup-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 0;
+  }
+
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 2px;
+  }
+
+  .role-toggle {
+    padding: 20px;
+    border-radius: 18px;
+    gap: 16px;
+  }
+
+  .role-toggle-icon { font-size: 30px; width: 36px; }
+  .role-toggle-label { font-size: 18px; }
+  .role-toggle-desc { font-size: 13.5px; }
+
+  /* Show inline CTA, hide fixed CTA */
+  .setup-cta-inline { display: block; margin-top: 6px; }
+  .setup-cta-fixed  { display: none; }
+
+  .start-btn { min-height: 62px; font-size: 18px; border-radius: 18px; }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Mafia — Game Organiser",
+  "short_name": "Mafia",
+  "description": "Party game organiser for Mafia — manage roles, night actions, and voting.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#06070f",
+  "theme_color": "#06070f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

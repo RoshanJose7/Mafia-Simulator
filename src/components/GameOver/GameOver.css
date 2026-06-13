@@ -1,0 +1,176 @@
+.gameover-screen {
+  position: relative;
+  min-height: 100dvh;
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  overflow-y: auto;
+  overscroll-behavior: none;
+}
+
+.gameover-content {
+  position: relative;
+  z-index: 1;
+  padding: 64px 24px;
+  padding-top: calc(64px + var(--safe-top));
+  padding-bottom: calc(36px + var(--safe-bottom));
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.win-icon {
+  font-size: 78px;
+  text-align: center;
+  animation: floaty 3s ease-in-out infinite;
+}
+
+.win-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  text-align: center;
+  color: #fff;
+  letter-spacing: -1px;
+  margin: 14px 0 0;
+}
+
+.win-flavor {
+  text-align: center;
+  color: #cfcad8;
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin: 14px auto 0;
+  max-width: 300px;
+}
+
+/* Faction sections — stacked on mobile */
+.factions-grid {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.faction-section {}
+
+.faction-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.faction-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.faction-label.mafia  { color: #ff8585; }
+.faction-label.town   { color: #7fb0ff; }
+
+.faction-divider {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,.1);
+}
+
+.reveal-rows { display: flex; flex-direction: column; gap: 8px; }
+
+.reveal-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  transition: opacity .2s;
+}
+
+.reveal-row.dead { opacity: .55; }
+
+.reveal-icon { font-size: 24px; width: 30px; text-align: center; }
+.reveal-info { flex: 1; min-width: 0; }
+.reveal-name { color: #fff; font-weight: 700; font-size: 15px; }
+.reveal-role { color: #a59fb5; font-size: 12px; }
+.reveal-skull { font-size: 17px; }
+
+/* Buttons */
+.gameover-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.play-again-btn {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 16.5px;
+  font-weight: 800;
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: .2px;
+  transition: all .2s;
+}
+
+.play-again-btn:hover { filter: brightness(1.1); }
+
+.new-game-btn {
+  width: 100%;
+  padding: 15px;
+  min-height: 52px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.05);
+  color: #cfcad8;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.new-game-btn:hover { background: rgba(255,255,255,.1); }
+
+/* ── DESKTOP (≥768px) ── */
+@media (min-width: 768px) {
+  .gameover-content {
+    max-width: 960px;
+    padding: 72px 48px 56px;
+  }
+
+  .win-icon { font-size: 104px; }
+  .win-title  { font-size: 64px; letter-spacing: -2px; margin-top: 18px; }
+  .win-flavor { font-size: 17px; max-width: 560px; line-height: 1.6; }
+
+  /* Side-by-side faction columns */
+  .factions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-top: 48px;
+  }
+
+  .reveal-icon { font-size: 28px; width: 34px; }
+  .reveal-name { font-size: 17px; }
+
+  /* Horizontal action buttons */
+  .gameover-actions {
+    flex-direction: row;
+    gap: 14px;
+    max-width: 620px;
+    width: 100%;
+  }
+
+  .play-again-btn { flex: 2; }
+  .new-game-btn   { flex: 1; }
+}
+
+@media (min-width: 1200px) {
+  .gameover-content { max-width: 1100px; }
+}
