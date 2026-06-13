@@ -27,17 +27,17 @@ Mafia is a social deduction game where players are secretly divided into two fac
 
 ## Players and Role Distribution
 
-Recommended player counts and role distributions:
+The app automatically assigns roles based on player count using the formula: `mafia = max(1, round(n / 4))`.
 
-| Total Players | Mafia | Civilians | Special Roles |
-|---|---|---|---|
-| 5–6 | 1 | Remaining | None |
-| 7–8 | 2 | Remaining | 1 Detective |
-| 9–10 | 2 | Remaining | 1 Detective, 1 Doctor |
-| 11–12 | 3 | Remaining | 1 Detective, 1 Doctor |
-| 13+ | 3–4 | Remaining | 1 Detective, 1 Doctor, 1 Godfather |
+| Total Players | Mafia Count | Notes |
+|---|---|---|
+| 4–5 | 1 | |
+| 6–7 | 2 | |
+| 8–9 | 2 | |
+| 10–11 | 3 | |
+| 12+ | 3+ | Scales with player count |
 
-General rule: Mafia should be roughly 1/4 to 1/3 of the total players.
+Special roles (Detective, Doctor, Godfather) are toggled by the organiser before the game starts and are added on top of the Mafia/Civilian split.
 
 ---
 
@@ -52,31 +52,38 @@ General rule: Mafia should be roughly 1/4 to 1/3 of the total players.
 
 ### 1. Setup
 
-1. A **Moderator** (human or system) assigns roles secretly to each player.
-2. Players are informed only of their own role.
-3. If there is a Mafia faction with multiple members, they are told who their Mafia allies are.
+1. The **Organiser** enters player names and selects which special roles to include.
+2. The app assigns roles randomly and shuffles them.
+3. Roles are revealed privately — the organiser hands the device to each player one at a time. No one else sees the screen during a reveal.
+4. Mafia members (and the Godfather) are shown who their allies are on their role card.
 
 ### 2. Night Phase
 
-All players "go to sleep" (close their eyes / are inactive). The Moderator wakes each role group in the following order:
+All players "close their eyes." The organiser manages the night silently on the device, calling each group in order:
 
-1. **Mafia** wake up, silently agree on one player to eliminate, then go back to sleep.
-2. **Doctor** (if in game) wakes up, chooses one player to protect, then goes back to sleep.
-3. **Detective** (if in game) wakes up, chooses one player to investigate. The Moderator silently signals whether that player is Mafia or Civilian (Godfather appears as Civilian), then the Detective goes back to sleep.
+1. **Mafia** open their eyes and silently point at one player to eliminate. The organiser taps that player on the device to record the target, then confirms.
+2. **Doctor** (if in game) opens their eyes and silently points at one player to protect. The organiser taps that player and confirms. The Doctor cannot protect the same player they protected the previous night.
+3. **Detective** (if in game) opens their eyes and silently points at one player to investigate. The organiser taps that player, then taps "Reveal result to Detective" to show the result — only the Detective looks at the screen. The Godfather always appears as Civilian to the Detective. The organiser then confirms once the Detective has seen the result.
 
-Resolution:
+Resolution (automatic):
 - If the Mafia's target was protected by the Doctor, **no one is eliminated** that night.
-- Otherwise, the Mafia's target is **eliminated** and revealed at the start of the next day.
+- Otherwise, the Mafia's target is **eliminated** and announced at the start of the next day.
 
 ### 3. Day Phase
 
-1. All players "wake up." The Moderator announces who was eliminated during the night (or that nobody was eliminated if protected).
-2. The eliminated player's role is revealed publicly.
-3. All surviving players openly **discuss and debate** who they believe the Mafia members are. There is no time limit defined by the rules, but a recommended discussion period is 3–5 minutes.
-4. Players proceed to a **vote**. Each surviving player votes for one player they want to eliminate. Votes are cast simultaneously (or in order, depending on format).
-5. The player with the **most votes** is eliminated. Their role is revealed publicly.
-   - **Tie rule**: In the event of a tie, no one is eliminated that day (a "no vote" result).
-6. Check win conditions after the elimination. If no one has won, proceed to the next Night Phase.
+1. All players open their eyes. The organiser announces who was eliminated during the night (or that nobody was harmed).
+2. **Role identity is kept secret** — the eliminated player's role is not revealed to the other players. Only the organiser can see it (shown privately on the device). The full role reveal happens only at Game Over.
+3. All surviving players openly **discuss and debate** who they believe the Mafia members are. The app runs a **3-minute discussion timer** (pause/resume available).
+4. Players proceed to a **vote**. The organiser tallies votes by tapping +/− next to each player's name.
+5. The player with the **most votes** is eliminated.
+   - **Tie rule**: If two or more players share the highest vote count, no one is eliminated that day.
+6. The eliminated player's role is again kept private (organiser-only). Win conditions are checked. If no one has won, the next Night Phase begins.
+
+---
+
+## Role Secrecy Rule
+
+Eliminated players' roles are **intentionally hidden from other players** during the game. The organiser sees the role privately via an on-screen indicator, but nothing is announced aloud. This preserves tension and prevents players from using elimination results to deduce remaining roles. All roles are revealed to everyone on the Game Over screen.
 
 ---
 
@@ -85,8 +92,8 @@ Resolution:
 - **Eliminated players** may not speak, vote, or communicate in any way during the game. They are out.
 - **Players may lie** freely — Mafia members can claim to be Civilians, Detectives, or Doctors. Civilians may bluff or misdirect.
 - **The Detective's findings are private** until the Detective chooses to share them aloud during the Day Phase. The Detective may lie about findings or keep them secret.
-- **The Doctor cannot be self-protected on two consecutive nights** (prevents trivial immortality).
-- **The Moderator never lies** and answers only what the rules permit. The Moderator does not reveal roles unless a player is eliminated.
+- **The Doctor cannot protect the same player on two consecutive nights** (prevents trivial immortality; the previously protected player is greyed out on the organiser's screen).
+- **The Organiser never reveals information** beyond what the rules permit and does not announce roles of eliminated players.
 
 ---
 
@@ -94,10 +101,11 @@ Resolution:
 
 | Term | Meaning |
 |---|---|
-| Moderator | The game host. Runs the night phase, announces results, and enforces rules. |
+| Organiser | The game host. Runs the app, manages night actions, announces results. Does not play as a role. |
 | Eliminated | A player who has been removed from the game (by Mafia kill or day vote). |
 | Night Phase | The phase where special roles act and the Mafia chooses a target. |
 | Day Phase | The phase where all players debate and vote to eliminate a suspect. |
 | Protected | A player shielded by the Doctor from being killed that night. |
 | Investigated | A player whose allegiance (Mafia or Civilian) is revealed to the Detective. |
-| No Vote | A day that ends with no elimination (due to a tie). |
+| No Vote | A day that ends with no elimination due to a tie. |
+| Organiser Pill | The private on-screen indicator showing the organiser a player's role, not visible to other players. |
