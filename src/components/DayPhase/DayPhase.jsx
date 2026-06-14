@@ -65,8 +65,7 @@ export default function DayPhase({ players, round, announcement, onResolved, onW
       updatedPlayers = players.map((p) => p.id === eliminated.id ? { ...p, alive: false } : p);
     }
     const winner = checkWinCondition(updatedPlayers);
-    if (winner) onWin(winner);
-    else onResolved({ players: updatedPlayers, winner: null });
+    onResolved({ players: updatedPlayers, winner: winner || null });
   }
 
   const max = Math.max(0, ...Object.values(votes));

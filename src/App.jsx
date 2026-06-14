@@ -27,10 +27,10 @@ export default function App() {
     setPhase('night');
   }
 
-  function handleNightResolved({ players: updatedPlayers, killed, saved }) {
+  function handleNightResolved({ players: updatedPlayers, killed, saved, winner }) {
     setPlayers(updatedPlayers);
     setAnnouncement({ killed, saved });
-    setPhase('day');
+    setPhase(winner ? 'gameover' : 'day');
   }
 
   function handleDayElimination({ players: updatedPlayers, winner }) {

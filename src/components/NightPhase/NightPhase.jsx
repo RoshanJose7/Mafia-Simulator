@@ -87,8 +87,7 @@ export default function NightPhase({ players, round, onResolved, onWin, onRestar
     } else {
       const { players: updated, killed, saved } = resolveNight({ players, mafiaTarget, doctorTarget });
       const winner = checkWinCondition(updated);
-      if (winner) onWin(winner);
-      else onResolved({ players: updated, killed, saved });
+      onResolved({ players: updated, killed, saved, winner: winner || null });
     }
   }
 

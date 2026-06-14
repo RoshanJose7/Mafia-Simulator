@@ -36,6 +36,12 @@ export default function RoleReveal({ players, onDone, onRestart, onEndGame }) {
     else { setCurrent((c) => c + 1); setRevealed(false); }
   }
 
+  const neutralBtnStyle = {
+    background: '#6c7bff',
+    color: '#fff',
+    boxShadow: `0 14px 34px -12px rgba(108,123,255,.9), inset 0 1px 0 rgba(255,255,255,.22)`,
+  };
+
   const btnStyle = {
     background: color,
     color: lum(color) > 0.62 ? '#0a0a0f' : '#fff',
@@ -62,7 +68,7 @@ export default function RoleReveal({ players, onDone, onRestart, onEndGame }) {
           <div className="reveal-counter">Player {current + 1} of {players.length}</div>
 
           <div className="pre-reveal-cta">
-            <button className="primary-btn" style={btnStyle} onClick={handleReveal}>
+            <button className="primary-btn" style={neutralBtnStyle} onClick={handleReveal}>
               Reveal {player.name}'s Role →
             </button>
           </div>
