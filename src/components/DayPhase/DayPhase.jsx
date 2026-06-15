@@ -4,8 +4,9 @@ import RestartButton from '../RestartButton.jsx';
 import './DayPhase.css';
 
 const DISCUSSION_SECONDS = 180;
+const TIMER_RADIUS = 142;
 
-export default function DayPhase({ players, round, announcement, onResolved, onWin, onRestart, onEndGame }) {
+export default function DayPhase({ players, round, announcement, onResolved, onRestart, onEndGame }) {
   const [stage, setStage] = useState('announcement');
   const [votes, setVotes] = useState({});
   const [eliminated, setEliminated] = useState(null);
@@ -70,7 +71,7 @@ export default function DayPhase({ players, round, announcement, onResolved, onW
 
   const max = Math.max(0, ...Object.values(votes));
   const fmt = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-  const C = 2 * Math.PI * 142;
+  const C = 2 * Math.PI * TIMER_RADIUS;
   const frac = secondsLeft / DISCUSSION_SECONDS;
   const urgent = secondsLeft <= 30;
 
@@ -119,9 +120,9 @@ export default function DayPhase({ players, round, announcement, onResolved, onW
 
             <div className="timer-wrap">
               <svg className="timer-svg" viewBox="0 0 320 320">
-                <circle cx="160" cy="160" r="142" fill="none" stroke="rgba(255,255,255,.1)" strokeWidth="16" />
+                <circle cx="160" cy="160" r={TIMER_RADIUS} fill="none" stroke="rgba(255,255,255,.1)" strokeWidth="16" />
                 <circle
-                  cx="160" cy="160" r="142" fill="none"
+                  cx="160" cy="160" r={TIMER_RADIUS} fill="none"
                   stroke={urgent ? '#ff4d4d' : '#f5a623'}
                   strokeWidth="16"
                   strokeLinecap="round"

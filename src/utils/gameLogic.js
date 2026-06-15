@@ -49,19 +49,19 @@ export const ROLE_META = {
   },
 };
 
-export function assignRoles(playerNames, config) {
+export function assignRoles(playerNames, config, previousMafiaNames = []) {
   const { includeDetective, includeDoctor, includeGodfather } = config;
   const count = playerNames.length;
 
   const roles = [];
 
-  // Determine mafia count
   let mafiaCount = 1;
   if (count >= 7) mafiaCount = 2;
   if (count >= 11) mafiaCount = 3;
   if (count >= 15) mafiaCount = 4;
 
-  // Add Godfather (replaces one Mafia slot)
+  const totalMafiaSlots = mafiaCount;
+
   if (includeGodfather && mafiaCount >= 1) {
     roles.push(ROLES.GODFATHER);
     mafiaCount -= 1;
@@ -71,13 +71,26 @@ export function assignRoles(playerNames, config) {
   if (includeDetective) roles.push(ROLES.DETECTIVE);
   if (includeDoctor) roles.push(ROLES.DOCTOR);
 
-  // Fill remaining with civilians
   while (roles.length < count) roles.push(ROLES.CIVILIAN);
 
-  // Shuffle roles
-  for (let i = roles.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [roles[i], roles[j]] = [roles[j], roles[i]];
+  const prevMafiaSet = new Set(previousMafiaNames);
+  const mafiaRoles = new Set([ROLES.MAFIA, ROLES.GODFATHER]);
+
+  // Try up to 10 shuffles to avoid giving a mafia role to a previous mafia player
+  for (let attempt = 0; attempt < 10; attempt++) {
+    for (let i = roles.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [roles[i], roles[j]] = [roles[j], roles[i]];
+    }
+
+    const assignment = playerNames.map((name, i) => ({ name, role: roles[i] }));
+    const hasRepeatMafia = assignment.some(
+      ({ name, role }) => prevMafiaSet.has(name) && mafiaRoles.has(role)
+    );
+
+    // Accept if no repeats, or if there aren't enough non-prev-mafia players to fill mafia slots
+    const eligibleCount = playerNames.filter((n) => !prevMafiaSet.has(n)).length;
+    if (!hasRepeatMafia || eligibleCount < totalMafiaSlots) break;
   }
 
   return playerNames.map((name, i) => ({
@@ -104,29 +117,18 @@ export function isMafia(role) {
 }
 
 export function resolveNight({ players, mafiaTarget, doctorTarget }) {
-  let killed = null;
-  let saved = false;
+  const updated = players.map((p) => ({ ...p, protectedLastNight: p.id === doctorTarget }));
 
-  const updated = players.map((p) => {
-    const wasProtected = p.id === doctorTarget;
-    return { ...p, protectedLastNight: wasProtected };
-  });
+  if (mafiaTarget === null) return { players: updated, killed: null, saved: false };
 
-  if (mafiaTarget !== null) {
-    const target = updated.find((p) => p.id === mafiaTarget);
-    if (target && target.protectedLastNight) {
-      saved = true;
-    } else if (target) {
-      killed = target;
-      return {
-        players: updated.map((p) =>
-          p.id === mafiaTarget ? { ...p, alive: false } : p
-        ),
-        killed,
-        saved,
-      };
-    }
-  }
+  const target = updated.find((p) => p.id === mafiaTarget);
+  if (!target) return { players: updated, killed: null, saved: false };
 
-  return { players: updated, killed, saved };
+  if (target.protectedLastNight) return { players: updated, killed: null, saved: true };
+
+  return {
+    players: updated.map((p) => (p.id === mafiaTarget ? { ...p, alive: false } : p)),
+    killed: target,
+    saved: false,
+  };
 }

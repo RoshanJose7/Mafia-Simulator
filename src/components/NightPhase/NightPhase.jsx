@@ -1,20 +1,8 @@
 import { useState, useRef } from 'react';
 import { ROLES, ROLE_META, isMafia, resolveNight, checkWinCondition } from '../../utils/gameLogic.js';
+import { hexAlpha, lum } from '../../utils/color.js';
 import RestartButton from '../RestartButton.jsx';
 import './NightPhase.css';
-
-function hexAlpha(hex, a) {
-  hex = hex.replace('#', '');
-  const r = parseInt(hex.slice(0,2),16);
-  const g = parseInt(hex.slice(2,4),16);
-  const b = parseInt(hex.slice(4,6),16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-
-function lum(hex) {
-  hex = hex.replace('#', '');
-  return (0.299*parseInt(hex.slice(0,2),16) + 0.587*parseInt(hex.slice(2,4),16) + 0.114*parseInt(hex.slice(4,6),16)) / 255;
-}
 
 const STEP_COLORS = { mafia: '#ff4d4d', doctor: '#2ee6a6', detective: '#f5b942' };
 
@@ -66,7 +54,7 @@ function usePermanentStars() {
   return ref.current;
 }
 
-export default function NightPhase({ players, round, onResolved, onWin, onRestart, onEndGame }) {
+export default function NightPhase({ players, round, onResolved, onRestart, onEndGame }) {
   const steps = buildSteps(players);
   const [stepIdx, setStepIdx] = useState(0);
   const [mafiaTarget, setMafiaTarget] = useState(null);
@@ -121,8 +109,7 @@ export default function NightPhase({ players, round, onResolved, onWin, onRestar
   let detResult = null;
   if (detectiveRevealed && detectiveTarget !== null) {
     const tp = players.find((p) => p.id === detectiveTarget);
-    const isMaf = isMafia(tp.role) && tp.role !== ROLES.GODFATHER;
-    detResult = isMaf ? 'mafia' : 'civilian';
+    detResult = tp.role === ROLES.MAFIA ? 'mafia' : 'civilian';
   }
 
   return (

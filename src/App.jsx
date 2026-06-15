@@ -4,7 +4,7 @@ import RoleReveal from './components/RoleReveal/RoleReveal.jsx';
 import NightPhase from './components/NightPhase/NightPhase.jsx';
 import DayPhase from './components/DayPhase/DayPhase.jsx';
 import GameOver from './components/GameOver/GameOver.jsx';
-import { assignRoles } from './utils/gameLogic.js';
+import { assignRoles, isMafia } from './utils/gameLogic.js';
 
 export default function App() {
   const [phase, setPhase] = useState('setup');
@@ -16,10 +16,11 @@ export default function App() {
   });
   const [round, setRound] = useState(1);
   const [announcement, setAnnouncement] = useState(null);
+  const [previousMafiaNames, setPreviousMafiaNames] = useState([]);
 
   function startRoleReveal(assignedPlayers, gameConfig) {
     setPlayers(assignedPlayers);
-    if (gameConfig) setConfig(gameConfig);
+    setConfig(gameConfig);
     setPhase('role-reveal');
   }
 
@@ -44,10 +45,6 @@ export default function App() {
     }
   }
 
-  function handleWin(winner) {
-    setPhase('gameover');
-  }
-
   function endGame() {
     setPhase('gameover');
   }
@@ -57,11 +54,16 @@ export default function App() {
     setPlayers([]);
     setRound(1);
     setAnnouncement(null);
+    setPreviousMafiaNames([]);
   }
 
   function restartKeepPlayers() {
     const names = players.map((p) => p.name);
-    const reassigned = assignRoles(names, config);
+    const currentMafiaNames = players
+      .filter((p) => isMafia(p.role))
+      .map((p) => p.name);
+    const reassigned = assignRoles(names, config, currentMafiaNames);
+    setPreviousMafiaNames(currentMafiaNames);
     setPlayers(reassigned);
     setRound(1);
     setAnnouncement(null);
@@ -79,7 +81,6 @@ export default function App() {
           players={players}
           round={round}
           onResolved={handleNightResolved}
-          onWin={handleWin}
           onRestart={restartKeepPlayers}
           onEndGame={endGame}
         />
@@ -90,7 +91,6 @@ export default function App() {
           round={round}
           announcement={announcement}
           onResolved={handleDayElimination}
-          onWin={handleWin}
           onRestart={restartKeepPlayers}
           onEndGame={endGame}
         />
